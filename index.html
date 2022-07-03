@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISS Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/picasso.js" crossorigin></script>
+
+    <style>
+        html,
+        body {
+            margin: 10px;
+            padding: 10px;
+            height: 100%;
+            background-color: #d6f2d4;
+        }
+        
+        #container {
+            height: 60%;
+            width: 60%;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"> </div>
+    <script>
+        picasso.chart({
+            element: document.querySelector("#container"),
+            data: [{
+                type: `matrix`,
+                data: [
+                    ["Year", "Region", "Sales", "Margin"],
+                    ["2018", "EU & UK", 1011, 7],
+                    ["2018", "USA", 985, 3],
+                    ["2018", "Rest of the World", 536, 9],
+                    ["2019", "EU & UK", 356, 3],
+                    ["2019", "USA", 568, 5],
+                    ["2019", "Rest of the World", 276, 1],
+                    ["2020", "EU & UK", 576, 3],
+                    ["2020", "USA", 750, 2],
+                    ["2020", "Rest of the World", 472, 3],
+                    ["2021", "EU & UK", 755, 5],
+                    ["2021", "USA", 950, 2],
+                    ["2021", "Rest of the World", 495, 3]
+                ]
+
+            }],
+            settings: {
+                scales: {
+                    y: {
+                        data: {
+                            field: 'Sales'
+                        },
+                        invert: true,
+                        expand: 0.5
+                    },
+                    x: {
+                        data: {
+                            field: 'Year'
+                        },
+                        expand: 0.5
+                    },
+                    col: {
+                        data: {
+                            extract: {
+                                field: 'Region'
+                            }
+                        },
+                        type: 'color'
+                    }
+
+
+                },
+                components: [{
+
+                    type: 'legend-cat',
+                    scale: 'col',
+                    dock: 'right'
+
+                }, {
+                    type: 'axis',
+                    scale: 'y',
+                    dock: 'left'
+                }, {
+                    type: 'axis',
+                    scale: 'x',
+                    dock: 'bottom'
+                }, {
+                    type: 'point',
+                    data: {
+                        extract: {
+                            field: 'Region',
+                            props: {
+                                y: {
+                                    field: 'Sales'
+                                },
+                                x: {
+                                    field: "Year"
+                                },
+                                fill: {
+                                    field: "Region"
+                                }
+                            }
+                        }
+                    },
+                    settings: {
+                        x: {
+                            scale: 'x'
+                        },
+                        y: {
+                            scale: 'y'
+                        },
+                        opacity: 0.8,
+                        fill: {
+                            scale: 'col'
+                        },
+
+                    }
+                }]
+            }
+        });
+    </script>
+</body>
+
+</html>
